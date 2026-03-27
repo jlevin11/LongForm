@@ -65,7 +65,7 @@ export default function LoginPage() {
             <Lock className="h-5 w-5 text-[#1e3a5f]" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
-          <p className="text-sm text-slate-500 mt-1">Sign in to your Contract Git account</p>
+          <p className="text-sm text-slate-500 mt-1">Sign in to your LongForm account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

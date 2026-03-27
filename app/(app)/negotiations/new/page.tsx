@@ -39,7 +39,7 @@ export default function NewNegotiationPage() {
 
         if (!counterparty) {
           toast.warning(
-            `${form.counterpartyEmail} doesn't have a Contract Git account yet. The negotiation will be created and you can link them later.`
+            `${form.counterpartyEmail} doesn't have a LongForm account yet. The negotiation will be created and you can link them later.`
           )
         } else {
           counterpartyId = counterparty.id
@@ -131,7 +131,7 @@ export default function NewNegotiationPage() {
               className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f]/30 focus:border-[#1e3a5f] transition-colors"
             />
             <p className="text-xs text-slate-400 mt-1">
-              The other party must have a Contract Git account. You can also link them later.
+              The other party must have a LongForm account. You can also link them later.
             </p>
           </div>
 

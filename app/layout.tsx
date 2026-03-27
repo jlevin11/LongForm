@@ -7,7 +7,7 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Contract Git — Secure Contract Negotiation',
+  title: 'LongForm — Secure Contract Negotiation',
   description:
     'End-to-end encrypted contract negotiation with full version history and track changes.',
 }

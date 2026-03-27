@@ -80,7 +80,7 @@ export default function SignupPage() {
         return
       }
 
-      toast.success('Account created! Welcome to Contract Git.')
+      toast.success('Account created! Welcome to LongForm.')
       router.push('/dashboard')
       router.refresh()
     } catch (err) {

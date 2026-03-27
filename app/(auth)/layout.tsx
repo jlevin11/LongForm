@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <header className="px-6 py-4">
         <Link href="/" className="inline-flex items-center gap-2 text-[#1e3a5f] hover:opacity-80 transition-opacity">
           <GitBranch className="h-5 w-5" />
-          <span className="font-bold text-lg">Contract Git</span>
+          <span className="font-bold text-lg">LongForm</span>
         </Link>
       </header>
       <main className="flex-1 flex items-center justify-center px-6 py-12">

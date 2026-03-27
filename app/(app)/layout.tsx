@@ -24,7 +24,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <GitBranch className="h-5 w-5" />
-            <span className="font-bold text-base">Contract Git</span>
+            <span className="font-bold text-base">LongForm</span>
           </Link>
           <div className="flex items-center gap-4">
             <Link

@@ -186,7 +186,7 @@ export function exportHistoryToPDF(
   doc.setFontSize(9)
   doc.setTextColor(120)
   doc.text(
-    'This document is an immutable record of the negotiation history exported from Contract Git.',
+    'This document is an immutable record of the negotiation history exported from LongForm.',
     margin,
     y
   )

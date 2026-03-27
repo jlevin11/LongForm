@@ -9,7 +9,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <GitBranch className="h-6 w-6 text-[#1e3a5f]" />
-            <span className="font-bold text-xl text-[#1e3a5f]">Contract Git</span>
+            <span className="font-bold text-xl text-[#1e3a5f]">LongForm</span>
           </div>
           <div className="flex items-center gap-3">
             <Link
@@ -41,7 +41,7 @@ export default function LandingPage() {
             <span className="text-blue-300">Track Every Change. Trust the Record.</span>
           </h1>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-10">
-            Contract Git brings version control to legal negotiations. Draft in private, commit when
+            LongForm brings version control to legal negotiations. Draft in private, commit when
             ready, and share a cryptographically secure, immutable history with opposing counsel.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -107,7 +107,7 @@ export default function LandingPage() {
               {
                 icon: Lock,
                 title: 'Zero-knowledge encryption',
-                desc: 'Your contract content is encrypted client-side with your keys. Even Contract Git administrators cannot read your documents.',
+                desc: 'Your contract content is encrypted client-side with your keys. Even LongForm administrators cannot read your documents.',
               },
               {
                 icon: History,
@@ -170,7 +170,7 @@ export default function LandingPage() {
       <footer className="border-t border-slate-200 py-8 px-6 text-center text-sm text-slate-400 bg-white">
         <div className="flex items-center justify-center gap-2 mb-2">
           <GitBranch className="h-4 w-4 text-slate-400" />
-          <span className="font-medium text-slate-600">Contract Git</span>
+          <span className="font-medium text-slate-600">LongForm</span>
         </div>
         <p>Secure contract negotiation with end-to-end encryption</p>
       </footer>
