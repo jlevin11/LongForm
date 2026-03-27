@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #1e3a5f;
+  --primary-hover: #2d5282;
+  --accent: #3b82f6;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --added: #bbf7d0;
+  --removed: #fecaca;
+  --added-text: #166534;
+  --removed-text: #991b1b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* TipTap editor prose styles */
+.tiptap-editor .ProseMirror {
+  outline: none;
+  min-height: 100%;
+  line-height: 1.8;
+  font-size: 0.9375rem;
+}
+
+.tiptap-editor .ProseMirror p {
+  margin-bottom: 1rem;
+}
+
+.tiptap-editor .ProseMirror h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  color: #0f172a;
+}
+
+.tiptap-editor .ProseMirror h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+  color: #0f172a;
+}
+
+.tiptap-editor .ProseMirror h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tiptap-editor .ProseMirror li {
+  margin-bottom: 0.25rem;
+}
+
+.tiptap-editor .ProseMirror blockquote {
+  border-left: 3px solid #e2e8f0;
+  padding-left: 1rem;
+  color: #64748b;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.tiptap-editor .ProseMirror strong {
+  font-weight: 700;
+}
+
+.tiptap-editor .ProseMirror em {
+  font-style: italic;
+}
+
+.tiptap-editor .ProseMirror u {
+  text-decoration: underline;
+}
+
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  color: #94a3b8;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Diff viewer */
+.diff-added {
+  background-color: var(--added);
+  color: var(--added-text);
+}
+
+.diff-removed {
+  background-color: var(--removed);
+  color: var(--removed-text);
+  text-decoration: line-through;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
