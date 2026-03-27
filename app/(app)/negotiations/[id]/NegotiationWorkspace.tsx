@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
 import {
   GitCommitHorizontal,
@@ -10,6 +10,8 @@ import {
   Download,
   LinkIcon,
   CheckCircle2,
+  Upload,
+  FileText,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import {
@@ -63,6 +65,35 @@ export default function NegotiationWorkspace({
   // Commit dialog
   const [showCommitDialog, setShowCommitDialog] = useState(false)
   const [commitMessage, setCommitMessage] = useState('')
+
+  // Word import
+  const importFileRef = useRef<HTMLInputElement>(null)
+  const [importing, setImporting] = useState(false)
+
+  async function importFromWord(file: File) {
+    if (!file.name.endsWith('.docx')) {
+      toast.error('Please select a .docx Word file')
+      return
+    }
+    setImporting(true)
+    try {
+      const mammoth = (await import('mammoth')).default
+      const arrayBuffer = await file.arrayBuffer()
+      const result = await mammoth.convertToHtml({ arrayBuffer })
+      if (result.messages.length > 0) {
+        const warnings = result.messages.filter((m) => m.type === 'warning')
+        if (warnings.length > 0) toast.warning('Some formatting may not have imported perfectly')
+      }
+      setDraftContent(result.value)
+      setCurrentView({ type: 'draft' })
+      toast.success(`"${file.name}" imported successfully`)
+    } catch {
+      toast.error('Failed to parse Word document')
+    } finally {
+      setImporting(false)
+      if (importFileRef.current) importFileRef.current.value = ''
+    }
+  }
 
   // Load private key from sessionStorage on mount
   useEffect(() => {
@@ -370,6 +401,30 @@ export default function NegotiationWorkspace({
         </div>
 
         <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Hidden file input for Word import */}
+          <input
+            ref={importFileRef}
+            type="file"
+            accept=".docx"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              if (file) importFromWord(file)
+            }}
+          />
+
+          {/* Import Word button — only in draft mode */}
+          {currentView.type === 'draft' && (
+            <button
+              onClick={() => importFileRef.current?.click()}
+              disabled={importing}
+              className="flex items-center gap-1.5 text-sm text-slate-600 border border-slate-300 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50"
+            >
+              <Upload className="h-3.5 w-3.5" />
+              {importing ? 'Importing…' : 'Import Word'}
+            </button>
+          )}
+
           {/* Export dropdown */}
           <div className="relative group">
             <button className="flex items-center gap-1.5 text-sm text-slate-600 border border-slate-300 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
@@ -486,7 +541,37 @@ export default function NegotiationWorkspace({
             </div>
           )}
 
-          {!loadingContent && currentView.type === 'draft' && (
+          {!loadingContent && currentView.type === 'draft' && !draftContent && (
+            <div className="flex flex-col items-center justify-center h-full gap-6 text-center px-8">
+              <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center">
+                <FileText className="h-6 w-6 text-slate-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-slate-700 mb-1">Start your draft</h3>
+                <p className="text-sm text-slate-400 max-w-xs">
+                  Import an existing Word document or start writing from scratch.
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => importFileRef.current?.click()}
+                  disabled={importing}
+                  className="flex items-center gap-2 bg-[#1e3a5f] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-[#2d5282] transition-colors disabled:opacity-50"
+                >
+                  <Upload className="h-4 w-4" />
+                  {importing ? 'Importing…' : 'Import Word (.docx)'}
+                </button>
+                <button
+                  onClick={() => setDraftContent('<p></p>')}
+                  className="text-sm text-slate-500 border border-slate-300 px-5 py-2.5 rounded-lg hover:bg-slate-50 transition-colors"
+                >
+                  Start from scratch
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!loadingContent && currentView.type === 'draft' && draftContent && (
             <ContractEditor
               content={draftContent}
               onChange={setDraftContent}
