@@ -57,21 +57,28 @@ export default function SignupPage() {
       if (authError) throw new Error(authError.message)
       if (!authData.user) throw new Error('Signup failed — no user returned')
 
-      // 4. Save profile with public key and encrypted private key
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        email: form.email,
-        full_name: form.fullName,
-        firm_name: form.firmName || null,
-        public_key: publicKey,
-        encrypted_private_key: encryptedPrivateKey,
-        key_salt: salt,
-        key_iv: iv,
+      // 4. Save profile via security-definer RPC (works even before email confirmation)
+      const { error: profileError } = await supabase.rpc('create_initial_profile', {
+        p_id: authData.user.id,
+        p_email: form.email,
+        p_full_name: form.fullName,
+        p_firm_name: form.firmName || null,
+        p_public_key: publicKey,
+        p_encrypted_private_key: encryptedPrivateKey,
+        p_key_salt: salt,
+        p_key_iv: iv,
       })
       if (profileError) throw new Error(profileError.message)
 
       // 5. Store private key in sessionStorage
       storePrivateKey(authData.user.id, privateKey)
+
+      // 6. Handle email confirmation requirement
+      if (!authData.session) {
+        toast.success('Account created! Check your email to confirm your account, then log in.')
+        router.push('/login')
+        return
+      }
 
       toast.success('Account created! Welcome to Contract Git.')
       router.push('/dashboard')
