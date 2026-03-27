@@ -123,14 +123,19 @@ export default function NegotiationWorkspace({
           : version.content_key_encrypted_counter
 
         if (!encContent || !encIv || !encKey) {
-          return '<p><em>Content not yet available for your role.</em></p>'
+          const msg = '<p style="color:#6b7280;font-style:italic">This version was committed before you were added to this negotiation. Ask the other party to re-commit so it is encrypted for you.</p>'
+          setContentCache((prev) => ({ ...prev, [version.id]: msg }))
+          return msg
         }
 
         const decrypted = await decryptContent(encContent, encIv, encKey, privateKey)
         setContentCache((prev) => ({ ...prev, [version.id]: decrypted }))
         return decrypted
-      } catch {
-        return '<p><em>Failed to decrypt content.</em></p>'
+      } catch (err) {
+        console.error('Decryption failed for version', version.id, err)
+        const msg = '<p style="color:#ef4444;font-style:italic">Decryption failed. Your session key may not match — try signing out and back in.</p>'
+        setContentCache((prev) => ({ ...prev, [version.id]: msg }))
+        return msg
       } finally {
         setLoadingContent(false)
       }
